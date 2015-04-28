@@ -1,3 +1,9 @@
+## 2015-04-28 - 1.4.1 (Bugfixe release)
+
+#### Bugfixes:
+
+- Fixed #19 use of wrong variable for osfamily on servers
+
 ## 2015-04-22 - 1.4.0 (Feature/Bugfixe release)
 
 #### Features:
