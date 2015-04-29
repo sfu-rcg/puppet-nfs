@@ -22,9 +22,21 @@ class nfs::client::rhel::install {
   }
 
   if $nfs::client::rhel::nfs_v4_kerberized {
-    package { ['krb5-libs', 'krb5-workstation', 'krb5-devel',]:
-      ensure => present,
-    }    
+    if !defined(Package['krb5-libs']) {
+      package { 'krb5-libs':
+        ensure => present,
+      }
+    }
+    if !defined(Package['krb5-workstation']) {
+      package { 'krb5-workstation':
+        ensure => present,
+      }
+    }
+    if !defined(Package['krb5-devel']) {
+      package { 'krb5-devel':
+        ensure => present,
+      }
+    }
   }
 }
 
