@@ -5,7 +5,7 @@ class nfs::client::rhel::configure {
 
   # Because RHEL /etc/sysconfig/nfs doesn't want true/false;
   # it wants yes/no
-  if $nfs::client::rhel::nfs_v4_kerberized {
+  if $nfs::client::rhel::nfs_v4_kerberized == true {
      $nfs_v4_secure = 'yes'
   } else {
      $nfs_v4_secure = 'no'

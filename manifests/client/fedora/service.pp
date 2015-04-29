@@ -7,19 +7,19 @@ class nfs::client::fedora::service {
     require => Class['::nfs::client::fedora::configure']
   }
 
-  if $nfs::client::fedora::nfs_v4 {
+  if $nfs::client::fedora::nfs_v4 == true {
     $nfs4_services_ensure = 'running'
   } else {
     $nfs4_services_ensure = 'stopped'
   }
 
-  if $nfs::client::fedora::nfs_v4_kerberized {
+  if $nfs::client::fedora::nfs_v4_kerberized == true {
     $nfs4_kerberized_services_ensure = 'running'
   } else {
     $nfs4_kerberized_services_ensure = 'stopped'
   }
 
-  if $nfs::client::fedora::nfs_v4_kerberized {
+  if $nfs::client::fedora::nfs_v4_kerberized == true {
     service { 'nfs-secure': 
       provider  => 'systemd',
       ensure    => $nfs4_kerberized_services_ensure,

@@ -13,10 +13,22 @@ class nfs::client::fedora::install {
       ensure => present,
   }
 
-  if $nfs::client::fedora::nfs_v4_kerberized {
-    package { ['krb5-libs', 'krb5-workstation', 'krb5-devel',]:
-      ensure => present,
-    }    
+  if $nfs::client::rhel::nfs_v4_kerberized == true {
+    if !defined(Package['krb5-libs']) {
+      package { 'krb5-libs':
+        ensure => present,
+      }
+    }
+    if !defined(Package['krb5-workstation']) {
+      package { 'krb5-workstation':
+        ensure => present,
+      }
+    }
+    if !defined(Package['krb5-devel']) {
+      package { 'krb5-devel':
+        ensure => present,
+      }
+    }
   }
 }
 

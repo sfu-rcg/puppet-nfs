@@ -49,10 +49,10 @@
 #  }
 
 class nfs::client (
-  $nfs_v4                 = $::nfs::params::nfs_v4,
+  $nfs_v4                 = false,
   $nfs_v4_mount_root      = $::nfs::params::nfs_v4_mount_root,
   $nfs_v4_idmap_domain    = $::nfs::params::nfs_v4_idmap_domain,
-  $nfs_v4_kerberized      = $::nfs::params::nfs_v4_kerberized,
+  $nfs_v4_kerberized      = false,
   $nfs_v4_kerberos_realm  = $::nfs::params::nfs_v4_kerberos_realm,  
   $rpcgssd_opts           = $::nfs::params::rpcgssd_opts,
   $rpcsvcgssd_opts        = $::nfs::params::rpcsvcgssd_opts,

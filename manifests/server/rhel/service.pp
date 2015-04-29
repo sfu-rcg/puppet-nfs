@@ -1,10 +1,10 @@
 class nfs::server::rhel::service {
 
-  if $nfs::server::rhel::nfs_v4 {
-    $nfs_v4_services_ensure = 'running'
-  } else {
-    $nfs_v4_services_ensure = 'stopped'
-  }
+#  if $nfs::server::rhel::nfs_v4 == true {
+#    $nfs_v4_services_ensure = 'running'
+#  } else {
+#    $nfs_v4_services_ensure = 'stopped'
+#  }
 
   if !defined(Service["$nfs::client::rhel::service_nfs"]) {
     case $::operatingsystem {

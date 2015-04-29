@@ -7,13 +7,13 @@ class nfs::client::rhel::service {
     require => Class['::nfs::client::rhel::configure']
   }
 
-  if $nfs::client::rhel::nfs_v4 {
+  if $nfs::client::rhel::nfs_v4 == true {
     $nfs4_services_ensure = 'running'
   } else {
     $nfs4_services_ensure = 'stopped'
   }
 
-  if $nfs::client::rhel::nfs_v4_kerberized {
+  if $nfs::client::rhel::nfs_v4_kerberized == true {
     $nfs4_kerberized_services_ensure = 'running'
   } else {
     $nfs4_kerberized_services_ensure = 'stopped'

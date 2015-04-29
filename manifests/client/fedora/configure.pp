@@ -5,7 +5,7 @@ class nfs::client::fedora::configure {
 
   # Because rhel/fedora /etc/sysconfig/nfs doesn't want true/false
   # it wants yes/no
-  if $nfs::client::fedora::nfs_v4_kerberized {
+  if $nfs::client::fedora::nfs_v4_kerberized == true {
      $nfs_v4_secure = 'yes'
   } else {
      $nfs_v4_secure = 'no'

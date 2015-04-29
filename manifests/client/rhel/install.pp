@@ -21,7 +21,7 @@ class nfs::client::rhel::install {
     }
   }
 
-  if $nfs::client::rhel::nfs_v4_kerberized {
+  if $nfs::client::rhel::nfs_v4_kerberized == true {
     if !defined(Package['krb5-libs']) {
       package { 'krb5-libs':
         ensure => present,
