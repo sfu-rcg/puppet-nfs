@@ -19,7 +19,7 @@ class nfs::server::rhel::service {
         }
       }
       else {
-        Service["$nfs::client::rhel::service_nfs"] {
+        Service<| name == "$nfs::client::rhel::service_nfs" |> {
           ensure     => running,
           enable     => true,
           hasrestart => true,
