@@ -7,6 +7,9 @@
       "operatingsystem": "CentOS"
     },
     {
+      "operatingsystem": "Fedora"
+    },
+    {
       "operatingsystem": "Scientific"
     },
     {
@@ -27,7 +30,7 @@
     }
   ],
   "name": "echocat-nfs",
-  "version": "1.4.1",
+  "version": "1.4.2-beta",
   "source": "git clone https://github.com/echocat/puppet-nfs.git",
   "author": "echocat",
   "license": "Apache-2.0",

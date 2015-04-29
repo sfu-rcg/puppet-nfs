@@ -1,12 +1,12 @@
 class nfs::server::configure {
 
-  concat {'/etc/exports':
+  concat { '/etc/exports':
     ensure  => present,
     require => Class["nfs::server::${::nfs::params::osfamily}"],
   }
 
 
-  concat::fragment{
+  concat::fragment {
     'nfs_exports_header':
       target  => '/etc/exports',
       content => "# This file is configured through the nfs::server puppet module\n",

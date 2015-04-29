@@ -31,6 +31,8 @@ Github Master: [![Build Status](https://secure.travis-ci.org/echocat/puppet-nfs.
 This module can be used to simply mount nfs shares on a client or to configure your nfs servers.
 It can make use of storeconfigs on the puppetmaster to get its resources. 
 
+Supports Kerberized NFSv4 for servers and clients (RedHat and Fedora only for now)
+
 ##Setup
 
 **What nfs affects:**
@@ -127,7 +129,7 @@ node client {
   # also override mount point
   node media_client {
     include '::nfs::client'
-    Nfs::Client::Mount <<|nfstag == 'media' |>> {
+    Nfs::Client::Mount <<| nfstag == 'media' |>> {
       ensure => 'mounted',
       mount  => '/import/media'
     }
@@ -176,7 +178,7 @@ they were exported from on the server
 
 ```puppet
 node client {
-  class { 'nfs::server':
+  class { '::nfs::server':
     nfs_v4 = true,
     nfs_v4_export_root_clients =>
       '10.0.0.0/24(rw,fsid=root,insecure,no_subtree_check,async,no_root_squash)'
@@ -210,7 +212,12 @@ Just to show you, how complex we can make things ;-)
   # and on individual nodes.
   node server {
     class { 'nfs::server':
-      nfs_v4              => true,
+      nfs_v4                => true,
+      nfs_v4_kerberos_realm => 'EXAMPLE.COM',
+      nfs_v4_kerberized     => true,
+      rpcgssd_opts          => '-v',
+      rpcsvcgssd_opts       => '-v',
+      rpcidmapd_opts        => '-v',
       # Below are defaults
       nfs_v4_idmap_domain => $::domain,
       nfs_v4_export_root  => '/export',
@@ -246,9 +253,14 @@ Just to show you, how complex we can make things ;-)
   }
 
   node client {
-    class { 'nfs::server':
+    class { '::nfs::server':
       nfs_v4              => true,
       nfs_v4_idmap_domain => $::domain
+      nfs_v4_kerberos_realm => 'EXAMPLE.COM',
+      nfs_v4_kerberized     => true,
+      rpcgssd_opts          => '-v',
+      rpcsvcgssd_opts       => '-v',
+      rpcidmapd_opts        => '-v',
       nfs_v4_mount_root   => '/srv',
     }
 
