@@ -9,7 +9,7 @@ define nfs::server::export::configure (
     concat::fragment{
       $name:
         target  => '/etc/exports',
-        content => $line
+        content => $line,
     }
   }
 }

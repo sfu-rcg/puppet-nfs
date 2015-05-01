@@ -9,21 +9,23 @@ class nfs::server::rhel::service {
   case $::operatingsystem {
     centos, rhel: {
       if !defined(Service["$nfs::client::rhel::service_nfs"]) {
-        service { "$nfs::client::rhel::service_nfs":
+        service { "$nfs::server::rhel::service_nfs":
           ensure     => running,
           enable     => true,
           hasrestart => true,
           hasstatus  => true,
+          restart    => $nfs::server::rhel::service_nfs_restart_cmd,
           require    => Package["nfs-utils"],
           subscribe  => [ Concat['/etc/exports'], File['/etc/idmapd.conf'], File['/etc/sysconfig/nfs'] ],
         }
       }
       else {
-        Service<| name == "$nfs::client::rhel::service_nfs" |> {
+        Service<| title == "$nfs::server::rhel::service_nfs" |> {
           ensure     => running,
           enable     => true,
           hasrestart => true,
           hasstatus  => true,
+          restart    => $nfs::server::rhel::service_nfs_restart_cmd,
           require    => Package["nfs-utils"],
           subscribe  => [ Concat['/etc/exports'], File['/etc/idmapd.conf'], File['/etc/sysconfig/nfs'] ],
         }
