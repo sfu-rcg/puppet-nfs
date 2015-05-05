@@ -26,24 +26,22 @@ class nfs::client::rhel::service {
   }
   if !defined(Service["$nfs::client::rhel::service_nfs"]) {
     service { "$nfs::client::rhel::service_nfs":
-      ensure    => $nfs4_services_ensure,
-      enable    => $nfs::client::rhel::nfs_v4,
+      ensure    => running,
+      enable    => true,
       hasstatus => true,
     }    
   }
 
-  if $nfs::client::rhel::osmajor >= 6 {
+  if $nfs::client::rhel::osmajor == 6 {
     service { "$nfs::client::rhel::service_nfslock":
       ensure    => running,
       enable    => true,
       hasstatus => true,
       require   => Service["rpcbind"], 
     }
-    if $nfs::client::rhel::osmajor == 6 {
-      service { "netfs":
-        enable  => true,
-        require => Service["$nfs::client::rhel::service_nfslock"],
-      }
+    service { "netfs":
+      enable  => true,
+      require => Service["$nfs::client::rhel::service_nfslock"],
     }
     service { "rpcbind":
       ensure    => running,
