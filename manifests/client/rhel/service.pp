@@ -63,4 +63,5 @@ class nfs::client::rhel::service {
         require   => [ Package["portmap"], Package["nfs-utils"] ],
       }
     }
+  }
 }
