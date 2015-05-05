@@ -19,6 +19,8 @@ class nfs::client::rhel::service {
       ensure    => running,
       enable    => true,
       hasstatus => true,
+      hasrestart => true,
+      restart    => $nfs::client::rhel::service_nfs_restart_cmd,
     }    
   }
 

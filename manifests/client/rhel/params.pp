@@ -10,6 +10,7 @@ class nfs::client::rhel::params {
       $service_rpcgssd = 'rpcgssd'
       $service_rpcsvcgssd = 'rpcsvcgssd'
       $service_rpcidmapd = 'rpcidmapd'
+      $service_nfs_restart_cmd = undef
     }
     /^6\.\d+$/: {
       $osmajor = 6
@@ -18,23 +19,26 @@ class nfs::client::rhel::params {
       $service_rpcgssd = 'rpcgssd'
       $service_rpcsvcgssd = 'rpcsvcgssd'
       $service_rpcidmapd = 'rpcidmapd'
+      $service_nfs_restart_cmd = undef
     }
     /^7\.\d+/: {
       $osmajor = 7
-      $service_nfslock = 'nfs-lock'
+      $service_nfslock = 'nfs-server'
       $service_nfs = 'nfs-server'
-      $service_rpcgssd = 'rpc-gssd'
-      $service_rpcsvcgssd = 'rpc-svcgssd'
-      $service_rpcidmapd = 'nfs-idmap'
+      $service_rpcgssd = 'rpc-server'
+      $service_rpcsvcgssd = 'rpc-server'
+      $service_rpcidmapd = 'nfs-server'
+      $service_nfs_restart_cmd = '/usr/bin/systemctl reload nfs-server'
     }
     # TODO: workaround for Fedora
     /^\d{2,}/: {
       $osmajor = 7
-      $service_nfslock = 'nfs-lock'
+      $service_nfslock = 'nfs-server'
       $service_nfs = 'nfs-server'
-      $service_rpcgssd = 'rpc-gssd'
-      $service_rpcsvcgssd = 'rpc-svcgssd'
-      $service_rpcidmapd = 'nfs-idmap'
+      $service_rpcgssd = 'rpc-server'
+      $service_rpcsvcgssd = 'rpc-server'
+      $service_rpcidmapd = 'nfs-server'
+      $service_nfs_restart_cmd = '/usr/bin/systemctl reload nfs-server'
     }
     default:{
       fail("Operatingsystemrelease ${::operatingsystemrelease} not supported")
