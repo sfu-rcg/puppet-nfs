@@ -16,19 +16,19 @@ class nfs::client::rhel::service {
 
   if !defined(Service["$nfs::client::rhel::service_nfs"]) {
     service { "$nfs::client::rhel::service_nfs":
-      ensure    => running,
-      enable    => true,
-      hasstatus => true,
-      hasrestart => true,
-      restart    => $nfs::client::rhel::service_nfs_restart_cmd,
+      ensure      => running,
+      enable      => true,
+      hasstatus   => true,
+      hasrestart  => true,
+      restart     => $nfs::client::rhel::service_nfs_restart_cmd,
     }    
   }
 
-  if $nfs::client::rhel::osmajor <=6 {
+  if $nfs::client::rhel::osmajor <= 6 {
     service { ["$nfs::client::rhel::service_rpcgssd", "$nfs::client::rhel::service_rpcsvcgssd", "$nfs::client::rhel::service_rpcidmapd"]:
-      ensure    => $nfs4_kerberized_services_ensure,
-      enable    => $nfs::client::rhel::nfs_v4_kerberized,
-      hasstatus => true,
+      ensure      => $nfs4_kerberized_services_ensure,
+      enable      => $nfs::client::rhel::nfs_v4_kerberized,
+      hasstatus   => true,
     }
     if $nfs::client::rhel::osmajor == 6 {
       service { "$nfs::client::rhel::service_nfslock":
@@ -38,8 +38,8 @@ class nfs::client::rhel::service {
         require   => Service["rpcbind"], 
       }
       service { "netfs":
-        enable  => true,
-        require => Service["$nfs::client::rhel::service_nfslock"],
+        enable    => true,
+        require   => Service["$nfs::client::rhel::service_nfslock"],
       }
       service { "rpcbind":
         ensure    => running,
@@ -55,8 +55,8 @@ class nfs::client::rhel::service {
         require   => [ Package["portmap"], Package["nfs-utils"] ],
       }
       service { "netfs":
-        enable  => true,
-        require => [ Service["portmap"], Service[$nfs::client::rhel::service_nfslock] ],
+        enable    => true,
+        require   => [ Service["portmap"], Service[$nfs::client::rhel::service_nfslock] ],
       }
       service { "portmap":
         ensure    => running,
