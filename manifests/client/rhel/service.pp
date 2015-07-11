@@ -21,6 +21,7 @@ class nfs::client::rhel::service {
       hasstatus   => true,
       hasrestart  => true,
       restart     => $nfs::client::rhel::service_nfs_restart_cmd,
+      require     => Package["nfs-utils"],
     }    
   }
 
