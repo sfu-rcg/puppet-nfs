@@ -3,6 +3,12 @@ class nfs::client::debian::service {
     require => Class['nfs::client::debian::configure']
   }
 
+  if $nfs::client::debian::nfs_v4_kerberized == true {
+    $nfs4_kerberized_services_ensure = 'running'
+  } else {
+    $nfs4_kerberized_services_ensure = 'stopped'
+  }
+
   service { 'rpcbind':
     ensure    => running,
     enable    => true,
