@@ -3,7 +3,7 @@ class nfs::client::debian::configure {
     require => Class['nfs::client::debian::install']
   }
 
-  if $nfs::client::rhel::nfs_v4_kerberized == true {
+  if $nfs::client::debian::nfs_v4_kerberized == true {
     $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes', "set RPCGSSDOPTS ${nfs::client::debian::rpcgssd_opts}" ] 
   }
   else {
