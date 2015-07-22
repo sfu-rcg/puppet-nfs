@@ -25,8 +25,8 @@ class nfs::client::rhel::params {
       $osmajor = 7
       $service_nfslock = 'nfs-lock'
       $service_nfs = 'nfs-server'
-      $service_rpcgssd = 'nfs-server'
-      $service_rpcsvcgssd = 'nfs-server'
+      $service_rpcgssd = 'rpc-gssd'
+      $service_rpcsvcgssd = 'rpc-svcgssd'
       $service_rpcidmapd = 'nfs-idmapd'
       $service_nfs_restart_cmd = '/usr/bin/systemctl reload nfs-server'
     }
@@ -35,8 +35,8 @@ class nfs::client::rhel::params {
       $osmajor = 7
       $service_nfslock = 'nfs-lock'
       $service_nfs = 'nfs-server'
-      $service_rpcgssd = 'nfs-server'
-      $service_rpcsvcgssd = 'nfs-server'
+      $service_rpcgssd = 'rpc-gssd'
+      $service_rpcsvcgssd = 'rpc-svcgssd'
       $service_rpcidmapd = 'nfs-idmapd'
       $service_nfs_restart_cmd = '/usr/bin/systemctl reload nfs-server'
     }
