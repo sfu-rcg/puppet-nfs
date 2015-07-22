@@ -25,6 +25,11 @@ class nfs::client::rhel::service {
     }    
   }
 
+  service { ["$nfs::client::rhel::service_rpcgssd", "$nfs::client::rhel::service_rpcsvcgssd"]:
+    ensure    => $nfs4_kerberized_services_ensure,
+    enable    => $nfs::client::rhel::nfs_v4_kerberized,
+    hasstatus => true,
+  }
 
   if $nfs::client::rhel::osmajor >= 7 {
     service { [ "$nfs::client::rhel::service_nfslock", "$nfs::client::rhel::service_rpcidmapd", 'rpcbind' ]:
@@ -35,11 +40,6 @@ class nfs::client::rhel::service {
     }
   }
   elsif $nfs::client::rhel::osmajor <= 6 {
-    service { [ "$nfs::client::rhel::service_rpcgssd", "$nfs::client::rhel::service_rpcsvcgssd" ]:
-      ensure      => $nfs4_kerberized_services_ensure,
-      enable      => $nfs::client::rhel::nfs_v4_kerberized,
-      hasstatus   => true,
-    }
     if $nfs::client::rhel::osmajor == 6 {
       service { [ "$nfs::client::rhel::service_nfslock", "$nfs::client::rhel::service_rpcidmapd" ]:
         ensure    => running,
