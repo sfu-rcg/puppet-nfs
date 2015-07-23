@@ -25,7 +25,7 @@ class nfs::client::fedora::configure {
   }
   concat::fragment { 'idmapd.conf.erb':
     target  => '/etc/idmapd.conf',
-    order   => 01,
+    order   => '01',
     content => template('nfs/idmapd.conf.erb'),
     notify  => Service['nfs-idmap'],
   }
@@ -34,7 +34,7 @@ class nfs::client::fedora::configure {
   # no, there is no nfs-client on Fedora 17+
   concat::fragment { 'rhel-sysconfig-nfs':
     target  => '/etc/sysconfig/nfs',
-    order   => 02,
+    order   => '02',
     content => template('nfs/rhel-sysconfig-nfs.erb'),
     notify  => Service['nfs-secure', 'nfs-idmap', 'nfs-server'],
   }  
