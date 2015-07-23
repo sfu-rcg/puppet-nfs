@@ -27,7 +27,6 @@ class nfs::client::fedora::configure {
     target  => '/etc/idmapd.conf',
     order   => '01',
     content => template('nfs/idmapd.conf.erb'),
-    notify  => Service['nfs-idmap'],
   }
 
   # yes, the old /etc/init.d/nfs is called nfs-server now
@@ -36,6 +35,5 @@ class nfs::client::fedora::configure {
     target  => '/etc/sysconfig/nfs',
     order   => '02',
     content => template('nfs/rhel-sysconfig-nfs.erb'),
-    notify  => Service['nfs-secure', 'nfs-idmap', 'nfs-server'],
   }  
 }

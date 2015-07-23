@@ -10,7 +10,7 @@ class nfs::server::configure {
     'nfs_exports_header':
       target  => '/etc/exports',
       content => "# This file is configured through the nfs::server puppet module\n",
-      order   => 01,
+      order   => '01',
   }
 
   if $nfs::server::nfs_v4 == true {
