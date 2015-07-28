@@ -23,21 +23,21 @@ class nfs::client::rhel::params {
     }
     /^7\.\d+/: {
       $osmajor = 7
-      $service_nfslock = 'nfs-server'
+      $service_nfslock = 'nfs-lock'
       $service_nfs = 'nfs-server'
-      $service_rpcgssd = 'nfs-server'
-      $service_rpcsvcgssd = 'nfs-server'
-      $service_rpcidmapd = 'nfs-server'
+      $service_rpcgssd = 'rpc-gssd'
+      $service_rpcsvcgssd = 'rpc-svcgssd'
+      $service_rpcidmapd = 'nfs-idmapd'
       $service_nfs_restart_cmd = '/usr/bin/systemctl reload nfs-server'
     }
     # TODO: workaround for Fedora
     /^\d{2,}/: {
       $osmajor = 7
-      $service_nfslock = 'nfs-server'
+      $service_nfslock = 'nfs-lock'
       $service_nfs = 'nfs-server'
-      $service_rpcgssd = 'nfs-server'
-      $service_rpcsvcgssd = 'nfs-server'
-      $service_rpcidmapd = 'nfs-server'
+      $service_rpcgssd = 'rpc-gssd'
+      $service_rpcsvcgssd = 'rpc-svcgssd'
+      $service_rpcidmapd = 'nfs-idmapd'
       $service_nfs_restart_cmd = '/usr/bin/systemctl reload nfs-server'
     }
     default:{

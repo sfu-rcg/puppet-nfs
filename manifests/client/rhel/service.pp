@@ -21,17 +21,27 @@ class nfs::client::rhel::service {
       hasstatus   => true,
       hasrestart  => true,
       restart     => $nfs::client::rhel::service_nfs_restart_cmd,
+      require     => Package["nfs-utils"],
     }    
   }
 
-  if $nfs::client::rhel::osmajor <= 6 {
-    service { ["$nfs::client::rhel::service_rpcgssd", "$nfs::client::rhel::service_rpcsvcgssd", "$nfs::client::rhel::service_rpcidmapd"]:
-      ensure      => $nfs4_kerberized_services_ensure,
-      enable      => $nfs::client::rhel::nfs_v4_kerberized,
-      hasstatus   => true,
+  service { ["$nfs::client::rhel::service_rpcgssd", "$nfs::client::rhel::service_rpcsvcgssd"]:
+    ensure    => $nfs4_kerberized_services_ensure,
+    enable    => $nfs::client::rhel::nfs_v4_kerberized,
+    hasstatus => true,
+  }
+
+  if $nfs::client::rhel::osmajor >= 7 {
+    service { [ "$nfs::client::rhel::service_nfslock", "$nfs::client::rhel::service_rpcidmapd", 'rpcbind' ]:
+      ensure    => running,
+      enable    => true,
+      hasstatus => true,
+      require   => [ Package["rpcbind"], Package["nfs-utils"] ],
     }
+  }
+  elsif $nfs::client::rhel::osmajor <= 6 {
     if $nfs::client::rhel::osmajor == 6 {
-      service { "$nfs::client::rhel::service_nfslock":
+      service { [ "$nfs::client::rhel::service_nfslock", "$nfs::client::rhel::service_rpcidmapd" ]:
         ensure    => running,
         enable    => true,
         hasstatus => true,

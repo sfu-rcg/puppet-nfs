@@ -19,32 +19,36 @@ class nfs::client::fedora::service {
     $nfs4_kerberized_services_ensure = 'stopped'
   }
 
-  if $nfs::client::fedora::nfs_v4_kerberized == true {
+  if !defined(Service["nfs-secure"]) {
     service { 'nfs-secure': 
       provider  => 'systemd',
       ensure    => $nfs4_kerberized_services_ensure,
       enable    => $nfs::client::fedora::nfs_v4_kerberized,
       hasstatus => true,
-   }
+    }
   }
-    
-  service { 'nfs-idmap':
-    provider  => 'systemd',
-    ensure    => $nfs4_services_ensure,
-    enable    => $nfs::client::fedora::nfs_v4,
-    hasstatus => true,
+  if $::operatingsystemmajrelease <= 21 {    
+    if !defined(Service["nfs-idmap"]) {
+      service { 'nfs-idmap':
+        provider  => 'systemd',
+        ensure    => $nfs4_services_ensure,
+        enable    => $nfs::client::fedora::nfs_v4,
+        hasstatus => true,
+        subscribe => File[ '/etc/idmapd.conf', '/etc/sysconfig/nfs' ]
+      }
+    }
   }
 
   
-  if !defined(Service['nfs-server']) {
-    service { 'nfs-server':
-      provider  => 'systemd',
-      name      => 'nfs-server',
-      ensure    => running,
-      enable    => true,
-      hasstatus => true,
-    }    
-  }
+#  if !defined(Service['nfs-server']) {
+#    service { 'nfs-server':
+#      provider  => 'systemd',
+#      name      => 'nfs-server',
+#      ensure    => running,
+#      enable    => true,
+#      hasstatus => true,
+#    }    
+#  }
 
   service {'nfs-lock':
     ensure     => running,
