@@ -4,7 +4,12 @@ class nfs::client::debian::configure {
   }
 
   if $nfs::client::debian::nfs_v4_kerberized == true {
-    $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes', "set RPCGSSDOPTS ${nfs::client::debian::rpcgssd_opts}" ] 
+    if $nfs::client::debian::rpcgssd_opts {
+      $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes', "set RPCGSSDOPTS ${nfs::client::debian::rpcgssd_opts}" ] 
+    }
+    else {
+      $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes' ] 
+    }
   }
   else {
     $nfs_common_changes = [ 'set NEED_IDMAPD yes' ] 
@@ -13,7 +18,9 @@ class nfs::client::debian::configure {
       augeas {
         '/etc/default/nfs-common':
           context => '/files/etc/default/nfs-common',
-          changes => $nfs_common_changes;
+          changes => $nfs_common_changes,
+          lens    => 'Shellvars.lns',
+          incl    => '/etc/default/nfs-common';
         '/etc/idmapd.conf':
           context => '/files/etc/idmapd.conf/General',
           lens    => 'Puppet.lns',

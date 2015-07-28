@@ -15,12 +15,20 @@ class nfs::client::debian::service {
     hasstatus => false,
   }
 
-  if $nfs::client::debian::nfs_v4 {
-    service { 'idmapd':
-      ensure    => running,
-      subscribe => Augeas['/etc/idmapd.conf', '/etc/default/nfs-common'],
+
+  case $::operatingsystemrelease {
+    /^15\.\d+$/: {
+      # 15.04 doesn't use idmapd for client side anymore.  Neither does Fedora 22.  It's all done differently without a service
     }
-  } else {
-    service { 'idmapd': ensure => stopped, }
+    default: {
+      if $nfs::client::debian::nfs_v4 {
+        service { "$nfs::client::debian::params::service_rpcidmapd":
+          ensure    => running,
+          subscribe => Augeas['/etc/idmapd.conf', '/etc/default/nfs-common'],
+        }
+      } else {
+        service { "$nfs::client::debian::params::service_rpcidmapd": ensure => stopped, }
+      }
+    }
   }
 }
