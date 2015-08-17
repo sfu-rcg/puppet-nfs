@@ -15,6 +15,7 @@ class nfs::server::rhel::params {
     /^7\.\d+/: {
       $osmajor = 7
       $service_nfslock = 'nfs-lock'
+      $service_rpcsvcgssd = 'rpc-svcgssd'
       $service_nfs = 'nfs-server'
       $service_nfs_restart_cmd = '/usr/bin/systemctl reload nfs-server'
     }

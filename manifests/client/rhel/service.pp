@@ -13,7 +13,6 @@ class nfs::client::rhel::service {
     $nfs4_kerberized_services_ensure = 'stopped'
   }
 
-
   if !defined(Service["$nfs::client::rhel::service_nfs"]) {
     service { "$nfs::client::rhel::service_nfs":
       ensure      => running,
@@ -25,14 +24,14 @@ class nfs::client::rhel::service {
     }    
   }
 
-  service { ["$nfs::client::rhel::service_rpcgssd", "$nfs::client::rhel::service_rpcsvcgssd"]:
+  service { $nfs::client::rhel::service_rpcgssd:
     ensure    => $nfs4_kerberized_services_ensure,
     enable    => $nfs::client::rhel::nfs_v4_kerberized,
     hasstatus => true,
   }
 
   if $nfs::client::rhel::osmajor >= 7 {
-    service { [ "$nfs::client::rhel::service_nfslock", "$nfs::client::rhel::service_rpcidmapd", 'rpcbind' ]:
+    service { [ "$nfs::client::rhel::service_rpcidmapd", 'rpcbind' ]:
       ensure    => running,
       enable    => true,
       hasstatus => true,

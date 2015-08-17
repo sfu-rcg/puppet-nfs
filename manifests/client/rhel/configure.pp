@@ -33,6 +33,6 @@ class nfs::client::rhel::configure {
     target  => '/etc/sysconfig/nfs',
     order   => '02',
     content => template('nfs/rhel-sysconfig-nfs.erb'),
-    notify  => Service["$nfs::client::rhel::service_rpcgssd", "$nfs::client::rhel::service_rpcsvcgssd", "$nfs::client::rhel::service_rpcidmapd", "$nfs::client::rhel::service_nfs"],
+    notify  => Service["$nfs::client::rhel::service_rpcgssd", "$nfs::client::rhel::service_rpcidmapd", "$nfs::client::rhel::service_nfs"],
   }  
 }
