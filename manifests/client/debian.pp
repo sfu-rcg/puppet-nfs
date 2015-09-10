@@ -7,7 +7,7 @@ class nfs::client::debian (
   $rpcsvcgssd_opts = undef,
   $rpcidmapd_opts = undef,
   $rpcmountd_opts = undef
-) {
+) inherits nfs::client::debian::params {
 
   include nfs::client::debian::install,
     nfs::client::debian::configure,
