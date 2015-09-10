@@ -14,7 +14,7 @@ class nfs::client::debian::configure {
   else {
     $nfs_common_changes = [ 'set NEED_IDMAPD yes' ] 
   }
-  if $nfs::client::debian::nfs_v4 {
+  if $nfs::client::debian::nfs_v4 == true {
       augeas {
         '/etc/default/nfs-common':
           context => '/files/etc/default/nfs-common',

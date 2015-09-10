@@ -21,7 +21,7 @@ class nfs::client::debian::service {
       # 15.04 doesn't use idmapd for client side anymore.  Neither does Fedora 22.  It's all done differently without a service
     }
     default: {
-      if $nfs::client::debian::nfs_v4 {
+      if $nfs::client::debian::nfs_v4 == true {
         service { "$nfs::client::debian::params::service_rpcidmapd":
           ensure    => running,
           subscribe => Augeas['/etc/idmapd.conf', '/etc/default/nfs-common'],
