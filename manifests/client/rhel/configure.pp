@@ -27,12 +27,12 @@ class nfs::client::rhel::configure {
     target  => '/etc/idmapd.conf',
     order   => '01',
     content => template('nfs/idmapd.conf.erb'),
-    notify  => Service["$nfs::client::rhel::service_rpcidmapd"],
+    notify  => Service[$nfs::client::rhel::rpcidmapd[name]],
   }
   concat::fragment { 'rhel-sysconfig-nfs':
     target  => '/etc/sysconfig/nfs',
     order   => '02',
     content => template('nfs/rhel-sysconfig-nfs.erb'),
-    notify  => Service["$nfs::client::rhel::service_rpcgssd", "$nfs::client::rhel::service_rpcidmapd", "$nfs::client::rhel::service_nfs"],
+    notify  => [ Service[$nfs::client::rhel::rpcgssd[name]], Service[$nfs::client::rhel::rpcidmapd[name]] ],
   }  
 }
