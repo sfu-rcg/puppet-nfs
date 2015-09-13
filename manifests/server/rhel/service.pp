@@ -22,7 +22,7 @@ class nfs::server::rhel::service {
     ensure    => $nfs4_kerberized_services_ensure,
     enable    => $rpcsvcgssd_enable,
     hasstatus => true,
-    subscribe => Concat::Fragment ['rhel-sysconfig-nfs'],
+    subscribe => Concat::Fragment['rhel-sysconfig-nfs'],
   }
   if !defined(Service[$nfs::client::rhel::nfs[name]]) {
     service { $nfs::server::rhel::nfs[name]:
