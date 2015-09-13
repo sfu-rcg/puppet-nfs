@@ -57,6 +57,7 @@ class nfs::client (
   $rpcgssd_opts           = $::nfs::params::rpcgssd_opts,
   $rpcsvcgssd_opts        = $::nfs::params::rpcsvcgssd_opts,
   $rpcidmapd_opts         = $::nfs::params::rpcidmapd_opts,
+  $rpcmountd_opts         = $::nfs::params::rpcmountd_opts,
 ) inherits nfs::params {
 
   # ensure dependencies for mount
@@ -75,6 +76,7 @@ class nfs::client (
       rpcgssd_opts           => $rpcgssd_opts,
       rpcsvcgssd_opts        => $rpcsvcgssd_opts,
       rpcidmapd_opts         => $rpcidmapd_opts,
+      rpcmountd_opts         => $rpcmountd_opts,
     }
   }
 

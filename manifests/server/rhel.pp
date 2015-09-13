@@ -9,8 +9,8 @@ class nfs::server::rhel(
   $rpcmountd_opts        = undef,
 ) inherits nfs::server::rhel::params {
 
-  if !defined(Class['nfs::client::rhel']) {
-    class{ 'nfs::client::rhel':
+  if !defined(Class['nfs::client']) {
+    class{ 'nfs::client':
       nfs_v4                 => $nfs_v4,
       nfs_v4_idmap_domain    => $nfs_v4_idmap_domain,
       nfs_v4_kerberized      => $nfs_v4_kerberized,
