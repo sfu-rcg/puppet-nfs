@@ -1,53 +1,49 @@
 class nfs::server::rhel::service {
-
   if $nfs::server::rhel::nfs_v4_kerberized == true {
     $nfs4_kerberized_services_ensure = 'running'
   } else {
     $nfs4_kerberized_services_ensure = 'stopped'
   }
 
-  case $::operatingsystem {
-    centos, rhel: {
-      service { $nfs::server::rhel::service_rpcsvcgssd:
-        ensure    => $nfs4_kerberized_services_ensure,
-        enable    => $nfs::server::rhel::nfs_v4_kerberized,
-        hasstatus => true,
-        subscribe => Concat::Fragment ['rhel-sysconfig-nfs'],
-      }
-      if !defined(Service["$nfs::client::rhel::service_nfs"]) {
-        service { "$nfs::server::rhel::service_nfs":
-          ensure     => running,
-          enable     => true,
-          hasrestart => true,
-          hasstatus  => true,
-          restart    => $nfs::server::rhel::service_nfs_restart_cmd,
-          require    => Package["nfs-utils"],
-          subscribe  => [ Concat['/etc/exports'], File['/etc/idmapd.conf'], File['/etc/sysconfig/nfs'] ],
-        }
-      }
-      else {
-        Service<| title == "$nfs::server::rhel::service_nfs" |> {
-          ensure     => running,
-          enable     => true,
-          hasrestart => true,
-          hasstatus  => true,
-          restart    => $nfs::server::rhel::service_nfs_restart_cmd,
-          require    => Package["nfs-utils"],
-          subscribe  => [ Concat['/etc/exports'], File['/etc/idmapd.conf'], File['/etc/sysconfig/nfs'] ],
-        }
-      }
+  if $nfs::client::rhel::rpcsvcgssd[enable] == undef {
+    $rpcsvcgssd_enable = undef
+  }
+  elsif $nfs::client::rhel::rpcsvcgssd[enable] == false {
+    $rpcsvcgssd_enable = false
+  }
+  elsif $nfs4_kerberized == true {
+    $rpcsvcgssd_enable = true
+  }
+  else {
+    $rpcsvcgssd_enable = false
+  }
+
+  service { $nfs::server::rhel::rpcsvcgssd[name]:
+    ensure    => $nfs4_kerberized_services_ensure,
+    enable    => $rpcsvcgssd_enable,
+    hasstatus => true,
+    subscribe => Concat::Fragment ['rhel-sysconfig-nfs'],
+  }
+  if !defined(Service[$nfs::client::rhel::nfs[name]]) {
+    service { $nfs::server::rhel::nfs[name]:
+      ensure     => running,
+      enable     => $nfs::server::rhel::nfs[enable],
+      hasrestart => true,
+      hasstatus  => true,
+      restart    => $nfs::server::rhel::nfs[restart_cmd],
+      require    => Package['nfs-utils'],
+      subscribe  => [ Concat['/etc/exports'], File['/etc/idmapd.conf'], File['/etc/sysconfig/nfs'] ],
     }
-#      fedora: {
-#        service { "$nfs::client::rhel::service_nfs":
-#          provider   => 'systemd',
-#          name       => 'nfs.service',
-#          ensure     => running,
-#          enable     => true,
-#          hasrestart => true,
-#          hasstatus  => true,
-#          require    => Package["nfs-utils"],
-#          subscribe  => [ Concat['/etc/exports'], File['/etc/idmapd.conf'], File['/etc/sysconfig/nfs'] ],
-#        }
-#      }
+  }
+  else {
+    Service<| title == $nfs::server::rhel::nfs[name] |> {
+      ensure     => running,
+      enable     => $nfs::server::rhel::nfs[enable],
+      hasrestart => true,
+      hasstatus  => true,
+      restart    => $nfs::server::rhel::nfs[restart_cmd],
+      require    => Package['nfs-utils'],
+      subscribe  => [ Concat['/etc/exports'], File['/etc/idmapd.conf'], File['/etc/sysconfig/nfs'] ],
+    }
   }
 }
