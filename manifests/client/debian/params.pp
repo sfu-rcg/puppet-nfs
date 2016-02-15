@@ -18,14 +18,13 @@ class nfs::client::debian::params {
       $service_rpcidmapd = 'nfs-idmapd'
       $service_nfs_restart_cmd = '/usr/bin/systemctl reload nfs-server'
     }
-    # TODO: workaround for Fedora
-    /^\d{2,}/: {
-      $osmajor = 7
+    /^16\.\d+$/: {
+      $osmajor = 16
       $service_nfslock = 'nfs-server'
-      $service_nfs = 'nfs-server'
-      $service_rpcgssd = 'nfs-server'
-      $service_rpcsvcgssd = 'nfs-server'
-      $service_rpcidmapd = 'nfs-server'
+      $service_nfs = 'nfs-client'
+      $service_rpcgssd = 'rpc-gssd'
+      $service_rpcsvcgssd = 'rpc-svcgssd'
+      $service_rpcidmapd = 'nfs-idmapd'
       $service_nfs_restart_cmd = '/usr/bin/systemctl reload nfs-server'
     }
     default:{
