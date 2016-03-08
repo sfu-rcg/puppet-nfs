@@ -1,0 +1,5 @@
+# NFS Server options - Managed by Puppet
+<% rpcnfsdcount = scope['nfs::server::rpcnfsdcount'] -%>
+<% unless rpcnfsdcount.nil? || rpcnfsdcount == :undef || rpcnfsdcount.empty? -%>
+RPCNFSDCOUNT=<%= rpcnfsdcount %>
+<% end -%>
