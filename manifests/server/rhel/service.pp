@@ -32,7 +32,7 @@ class nfs::server::rhel::service {
       hasstatus  => true,
       restart    => $nfs::server::rhel::nfs[restart_cmd],
       require    => Package['nfs-utils'],
-      subscribe  => [ Concat['/etc/exports'], File['/etc/idmapd.conf'], File['/etc/sysconfig/nfs'] ],
+      subscribe  => [ Concat['/etc/exports'], Concat['/etc/idmapd.conf'], Concat['/etc/sysconfig/nfs'] ],
     }
   }
   else {
@@ -43,7 +43,7 @@ class nfs::server::rhel::service {
       hasstatus  => true,
       restart    => $nfs::server::rhel::nfs[restart_cmd],
       require    => Package['nfs-utils'],
-      subscribe  => [ Concat['/etc/exports'], File['/etc/idmapd.conf'], File['/etc/sysconfig/nfs'] ],
+      subscribe  => [ Concat['/etc/exports'], Concat['/etc/idmapd.conf'], Concat['/etc/sysconfig/nfs'] ],
     }
   }
 }

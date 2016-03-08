@@ -7,6 +7,7 @@ class nfs::server::rhel(
   $rpcsvcgssd_opts       = undef,
   $rpcidmapd_opts        = undef,
   $rpcmountd_opts        = undef,
+  $rpcnfsdcount          = undef
 ) inherits nfs::server::rhel::params {
 
   if !defined(Class['nfs::client']) {
@@ -23,6 +24,7 @@ class nfs::server::rhel(
   }
 
   include nfs::server::rhel::install,
+          nfs::server::rhel::configure,
           nfs::server::rhel::service
 }
 

@@ -64,6 +64,7 @@ class nfs::server (
   $rpcsvcgssd_opts              = $nfs::params::rpcsvcgssd_opts,
   $rpcidmapd_opts               = $nfs::params::rpcidmapd_opts,
   $rpcmountd_opts               = $nfs::params::rpcmountd_opts,
+  $rpcnfsdcount                 = undef,
   #
   $nfs_v4_root_export_ensure    = 'mounted',
   $nfs_v4_root_export_mount     = undef,
@@ -82,7 +83,8 @@ class nfs::server (
     rpcgssd_opts           => $rpcgssd_opts,
     rpcsvcgssd_opts        => $rpcsvcgssd_opts,
     rpcidmapd_opts         => $rpcidmapd_opts,
-    rpcmountd_opts         => $rpcmountd_opts
+    rpcmountd_opts         => $rpcmountd_opts,
+    rpcnfsdcount           => $rpcnfsdcount
   }
 
   include nfs::server::configure
