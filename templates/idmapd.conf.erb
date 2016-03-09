@@ -3,7 +3,7 @@ Verbosity = 1
 # The following should be set to the local NFSv4 domain name
 # The default is the host's DNS domain name.
 <% nfs_v4_idmap_domain = scope['nfs::client::nfs_v4_idmap_domain'] -%>
-<% nfs_v4_idmap_domain = '' if nfs_v4_idmap_domain.nil? || nfs_v4_idmap_domain == :undef || nfs_v4_idmap_domain.empty? -%>
+<% nfs_v4_idmap_domain = '' if nfs_v4_idmap_domain.nil? || nfs_v4_idmap_domain == :undef || nfs_v4_idmap_domain.to_s.empty? -%>
 Domain = <%= nfs_v4_idmap_domain %>
 
 # The following is a comma-separated list of Kerberos realm
@@ -16,7 +16,7 @@ Domain = <%= nfs_v4_idmap_domain %>
 # Note that if this value is specified, the local realm name
 # must be included in the list!
 <% nfs_v4_kerberos_realm = scope['nfs::client::nfs_v4_kerberos_realm'] -%>
-<% nfs_v4_kerberos_realm = '' if nfs_v4_kerberos_realm.nil? || nfs_v4_kerberos_realm == :undef || nfs_v4_kerberos_realm.empty? -%>
+<% nfs_v4_kerberos_realm = '' if nfs_v4_kerberos_realm.nil? || nfs_v4_kerberos_realm == :undef || nfs_v4_kerberos_realm.to_s.empty? -%>
 Local-Realms = <%= nfs_v4_kerberos_realm %>
 
 [Mapping]

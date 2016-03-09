@@ -39,7 +39,7 @@
 #
 # Optional arguments passed to rpc.mountd. See rpc.mountd(8)
 <% rpcmountd_opts = scope['nfs::client::rpcmountd_opts'] -%>
-<% rpcmountd_opts = '' if rpcmountd_opts.nil? || rpcmountd_opts == :undef || rpcmountd_opts.empty? -%>
+<% rpcmountd_opts = '' if rpcmountd_opts.nil? || rpcmountd_opts == :undef || rpcmountd_opts.to_s.empty? -%>
 RPCMOUNTDOPTS="<%= rpcmountd_opts %>"
 # Port rpc.mountd should listen on.
 #MOUNTD_PORT=892
@@ -58,20 +58,20 @@ RPCMOUNTDOPTS="<%= rpcmountd_opts %>"
 #
 # Optional arguments passed to rpc.idmapd. See rpc.idmapd(8)
 <% rpcidmapd_opts = scope['nfs::client::rpcidmapd_opts'] -%>
-<% rpcidmapd_opts = '' if rpcidmapd_opts.nil? || rpcidmapd_opts == :undef || rpcidmapd_opts.empty? -%>
+<% rpcidmapd_opts = '' if rpcidmapd_opts.nil? || rpcidmapd_opts == :undef || rpcidmapd_opts.to_s.empty? -%>
 RPCIDMAPDARGS="<%= rpcidmapd_opts %>"
 #
 # Set to turn on Secure NFS mounts. 
 <% nfs_v4_secure = scope['nfs_v4_secure'] -%>
-<% nfs_v4_secure = '' if nfs_v4_secure.nil? || nfs_v4_secure == :undef || nfs_v4_secure.empty? -%>
+<% nfs_v4_secure = '' if nfs_v4_secure.nil? || nfs_v4_secure == :undef || nfs_v4_secure.to_s.empty? -%>
 SECURE_NFS="<%= nfs_v4_secure %>"
 # Optional arguments passed to rpc.gssd. See rpc.gssd(8)
 <% rpcgssd_opts = scope['nfs::client::rpcgssd_opts'] -%>
-<% rpcgssd_opts = '' if rpcgssd_opts.nil? || rpcgssd_opts == :undef || rpcgssd_opts.empty? -%>
+<% rpcgssd_opts = '' if rpcgssd_opts.nil? || rpcgssd_opts == :undef || rpcgssd_opts.to_s.empty? -%>
 RPCGSSDARGS="<%= rpcgssd_opts %>"
 # Optional arguments passed to rpc.svcgssd. See rpc.svcgssd(8)
 <% rpcsvcgssd_opts = scope['nfs::client::rpcsvcgssd_opts'] -%>
-<% rpcsvcgssd_opts = '' if rpcsvcgssd_opts.nil? || rpcsvcgssd_opts == :undef || rpcsvcgssd_opts.empty? -%>
+<% rpcsvcgssd_opts = '' if rpcsvcgssd_opts.nil? || rpcsvcgssd_opts == :undef || rpcsvcgssd_opts.to_s.empty? -%>
 RPCSVCGSSDARGS="<%= rpcsvcgssd_opts %>"
 #
 # To enable RDMA support on the server by setting this to
