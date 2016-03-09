@@ -3,11 +3,11 @@ class nfs::params (
   $nfs_v4_export_root_clients = "*.${::domain}(ro,fsid=root,insecure,no_subtree_check,async,root_squash)",
   $nfs_v4_mount_root          = '/srv',
   $nfs_v4_idmap_domain        = $::domain,
-  $nfs_v4_kerberos_realm      = "",
-  $rpcgssd_opts               = "",
-  $rpcsvcgssd_opts            = "",
-  $rpcidmapd_opts             = "",
-  $rpcmountd_opts             = "",
+  $nfs_v4_kerberos_realm      = undef,
+  $rpcgssd_opts               = undef,
+  $rpcsvcgssd_opts            = undef,
+  $rpcidmapd_opts             = undef,
+  $rpcmountd_opts             = undef,
 ) {
 
   # Somehow the ::osfamily fact doesnt exist on some old systems

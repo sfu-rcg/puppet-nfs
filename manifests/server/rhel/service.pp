@@ -28,7 +28,7 @@ class nfs::server::rhel::service {
     service { $nfs::server::rhel::nfs[name]:
       ensure     => running,
       enable     => $nfs::server::rhel::nfs[enable],
-      hasrestart => true,
+      hasrestart => $nfs::client::rhel::nfs[has_restart],
       hasstatus  => true,
       restart    => $nfs::server::rhel::nfs[restart_cmd],
       require    => Package['nfs-utils'],
@@ -39,7 +39,7 @@ class nfs::server::rhel::service {
     Service<| title == $nfs::server::rhel::nfs[name] |> {
       ensure     => running,
       enable     => $nfs::server::rhel::nfs[enable],
-      hasrestart => true,
+      hasrestart => $nfs::client::rhel::nfs[has_restart],
       hasstatus  => true,
       restart    => $nfs::server::rhel::nfs[restart_cmd],
       require    => Package['nfs-utils'],

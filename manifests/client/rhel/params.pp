@@ -7,56 +7,57 @@ class nfs::client::rhel::params {
     /^[56]\.\d+/: {
       $osmajor = 6
       $nfslock = {
-        name => 'nfslock',
+        name   => 'nfslock',
         enable => true
       }
       $nfs = {
-        name => 'nfs',
-        enable => true,
+        name        => 'nfs',
+        enable      => true,
         has_restart => undef
       }
       $rpcgssd = {
-        name => 'rpcgssd',
+        name   => 'rpcgssd',
         enable => true
       }
       $rpcsvcgssd = {
-        name => 'rpcsvcgssd',
+        name   => 'rpcsvcgssd',
         enable => true
       }
       $rpcidmapd = {
-        name => 'rpcidmapd',
+        name   => 'rpcidmapd',
         enable => true
       }
       $rpcbind = {
-        name => 'rpcbind',
+        name   => 'rpcbind',
         enable => true
       }
     }
     /^7\.\d+/: {
       $osmajor = 7
       $nfslock = {
-        name => 'nfs-lock',
+        name   => 'nfs-lock',
         enable => undef
       }
       $nfs = {
-        name => 'nfs-server',
-        enable => true,
+        name        => 'nfs-server',
+        enable      => true,
+        has_restart => true,
         restart_cmd => '/usr/bin/systemctl reload nfs-server'
       }
       $rpcgssd = {
-        name => 'rpc-gssd',
+        name   => 'rpc-gssd',
         enable => undef
       }
       $rpcsvcgssd = {
-        name => 'rpc-svcgssd',
+        name   => 'rpc-svcgssd',
         enable => undef
       }
       $rpcidmapd = {
-        name => 'nfs-idmapd',
+        name   => 'nfs-idmapd',
         enable => undef
       }
       $rpcbind = {
-        name => 'rpcbind',
+        name   => 'rpcbind',
         enable => undef
       }
     }
