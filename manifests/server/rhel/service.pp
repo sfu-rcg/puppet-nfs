@@ -22,26 +22,31 @@ class nfs::server::rhel::service {
     ensure    => $nfs4_kerberized_services_ensure,
     enable    => $rpcsvcgssd_enable,
     hasstatus => true,
-    subscribe => Concat::Fragment['rhel-sysconfig-nfs'],
+    subscribe => Concat['/etc/sysconfig/nfs'],
+  }
+  service { $nfs::server::rhel::nfs_config[name]:
+    ensure    => running,
+    enable    => $nfs::server::rhel::nfs_config[enable],
+    hasstatus => true,
+    subscribe => Concat['/etc/sysconfig/nfs'],
+    before    => Service[$nfs::server::rhel::nfs[name]]
   }
   if !defined(Service[$nfs::client::rhel::nfs[name]]) {
     service { $nfs::server::rhel::nfs[name]:
       ensure     => running,
       enable     => $nfs::server::rhel::nfs[enable],
-      hasrestart => $nfs::client::rhel::nfs[has_restart],
+      hasrestart => $nfs::server::rhel::nfs[has_restart],
       hasstatus  => true,
-      restart    => $nfs::server::rhel::nfs[restart_cmd],
       require    => Package['nfs-utils'],
       subscribe  => [ Concat['/etc/exports'], Concat['/etc/idmapd.conf'], Concat['/etc/sysconfig/nfs'] ],
     }
   }
   else {
-    Service<| title == $nfs::server::rhel::nfs[name] |> {
+    service { $nfs::server::rhel::nfs[name]:
       ensure     => running,
       enable     => $nfs::server::rhel::nfs[enable],
-      hasrestart => $nfs::client::rhel::nfs[has_restart],
+      hasrestart => $nfs::server::rhel::nfs[has_restart],
       hasstatus  => true,
-      restart    => $nfs::server::rhel::nfs[restart_cmd],
       require    => Package['nfs-utils'],
       subscribe  => [ Concat['/etc/exports'], Concat['/etc/idmapd.conf'], Concat['/etc/sysconfig/nfs'] ],
     }

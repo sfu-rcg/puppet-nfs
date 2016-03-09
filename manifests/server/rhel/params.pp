@@ -3,32 +3,36 @@ class nfs::server::rhel::params {
     /^[56]\.\d+/: {
       $osmajor = 6
       $nfslock = {
-        name => 'nfslock',
+        name   => 'nfslock',
         enable => true
       }
       $nfs = {
-        name => 'nfs',
-        enable => true,
+        name        => 'nfs',
+        enable      => true,
         has_restart => undef
       }
       $rpcsvcgssd = {
-        name => 'rpcsvcgssd',
+        name   => 'rpcsvcgssd',
         enable => true
       }
     }
     /^7\.\d+/: {
       $osmajor = 7
       $nfslock = {
-        name => 'nfs-lock',
+        name   => 'nfs-lock',
         enable => undef
       }
       $nfs = {
-        name => 'nfs-server',
-        enable => true,
-        restart_cmd => '/usr/bin/systemctl reload nfs-server'
+        name        => 'nfs-server',
+        enable      => true,
+        has_restart => true,
+      }
+      $nfs_config = {
+        name   => 'nfs-config',
+        enable => undef
       }
       $rpcsvcgssd = {
-        name => 'rpc-svcgssd',
+        name   => 'rpc-svcgssd',
         enable => undef
       }
     }
