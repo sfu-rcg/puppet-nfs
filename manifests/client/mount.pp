@@ -23,7 +23,11 @@ define nfs::client::mount (
       $_nfs4_mount = $mount
     }
 
-    nfs::mkdir{ $_nfs4_mount: }
+    nfs::mkdir{ $_nfs4_mount: 
+      owner => $owner,
+      group => $group,
+      perm  => $perm
+    }
 
     mount {"shared ${server}:${share} by ${::clientcert} on ${_nfs4_mount}":
       ensure   => $ensure,

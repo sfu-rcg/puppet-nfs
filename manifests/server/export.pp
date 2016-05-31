@@ -3,6 +3,9 @@ define nfs::server::export (
   $v4_export_name = regsubst($name, '.*/(.*)', '\1' ),
   $clients        = 'localhost(ro)',
   $bind           = 'rbind',
+  $owner          = 'root',
+  $group          = 'root',
+  $perms          = '0755',
   # globals for this share
   # propogated to storeconfigs
   $ensure         = 'mounted',
@@ -21,6 +24,9 @@ define nfs::server::export (
       ensure         => $ensure,
       v4_export_name => $v4_export_name,
       bind           => $bind,
+      owner          => $owner,
+      group          => $group,
+      perms          => $perms,
     }
 
     nfs::server::export::configure{
