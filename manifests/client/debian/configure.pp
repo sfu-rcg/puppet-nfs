@@ -5,7 +5,12 @@ class nfs::client::debian::configure {
 
   if $nfs::client::debian::nfs_v4_kerberized == true {
     if $nfs::client::debian::rpcgssd_opts {
-      $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes', "set RPCGSSDOPTS ${nfs::client::debian::rpcgssd_opts}" ] 
+      $_rpcgssd_opts = $nfs::client::debian::rpcgssd_opts ? {
+        ''      => '""',
+        undef   => '""',
+        default => $nfs::client::debian::rpcgssd_opts
+      }
+      $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes', "set RPCGSSDOPTS ${_rpcgssd_opts}" ] 
     }
     else {
       $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes' ] 
