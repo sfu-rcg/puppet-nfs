@@ -10,14 +10,19 @@ class nfs::client::debian::configure {
         undef   => '""',
         default => $nfs::client::debian::rpcgssd_opts
       }
-      $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes', "set RPCGSSDOPTS ${_rpcgssd_opts}" ] 
+      $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes', "set RPCGSSDOPTS ${_rpcgssd_opts}" ]
     }
     else {
-      $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes' ] 
+      $nfs_common_changes = [ 'set NEED_IDMAPD yes', 'set NEED_GSSD yes' ]
     }
+    $nfs_idmapd_changes = [
+      "set Domain ${nfs::client::debian::nfs_v4_idmap_domain}",
+      "set Local-Realms ${nfs::client::debian::nfs_v4_kerberos_realm}"
+    ]
   }
   else {
-    $nfs_common_changes = [ 'set NEED_IDMAPD yes' ] 
+    $nfs_common_changes = [ 'set NEED_IDMAPD yes' ]
+    $nfs_idmapd_changes = [ "set Domain ${nfs::client::debian::nfs_v4_idmap_domain}" ]
   }
   if $nfs::client::debian::nfs_v4 == true {
       augeas {
@@ -30,7 +35,7 @@ class nfs::client::debian::configure {
           context => '/files/etc/idmapd.conf/General',
           lens    => 'Puppet.lns',
           incl    => '/etc/idmapd.conf',
-          changes => ["set Domain ${nfs::client::debian::nfs_v4_idmap_domain}"],
+          changes => $nfs_idmapd_changes,
       }
   }
 }
