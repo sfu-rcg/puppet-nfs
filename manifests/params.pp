@@ -15,7 +15,7 @@ class nfs::params (
   case $::operatingsystem {
     'centos', 'rhel', 'scientific'           : { $osfamily = 'rhel' }
     'fedora'                                 : { $osfamily = 'fedora' }
-    'redhat', 'SLC', 'OracleLinux', 'Amazon' : { $osfamily = 'redhat' }
+    'redhat', 'SLC', 'OracleLinux', 'Amazon' : { $osfamily = 'rhel' }
     'debian', 'Ubuntu'                       : { $osfamily = 'debian' }
     'windows'                                : { fail('fail!11') }
     'darwin'                                 : { $osfamily = 'darwin' }
