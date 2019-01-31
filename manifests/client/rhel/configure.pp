@@ -20,6 +20,8 @@ class nfs::client::rhel::configure {
      $nfs_v2_enable = 'no'
   }
 
+  $rpcnfsdargs = $nfs::client::rpcnfsdargs
+
 
   concat { '/etc/idmapd.conf':
     warn    => true,
