@@ -5,6 +5,7 @@ class nfs::params (
   $nfs_v4_mount_root          = '/srv',
   $nfs_v4_idmap_domain        = $::domain,
   $nfs_v4_kerberos_realm      = undef,
+  $rpcnfsdargs                = '',
   $rpcgssd_opts               = undef,
   $rpcsvcgssd_opts            = undef,
   $rpcidmapd_opts             = undef,

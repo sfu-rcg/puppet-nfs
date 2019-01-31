@@ -7,6 +7,7 @@ class nfs::client::rhel (
   $nfs_v4_idmap_domain = undef,
   $nfs_v4_kerberized = false,
   $nfs_v4_kerberos_realm = undef,
+  $rpcnfsdargs = '',
   $rpcgssd_opts = undef,
   $rpcsvcgssd_opts = undef,
   $rpcidmapd_opts = undef,
