@@ -2,6 +2,7 @@
 # refactored a bit
 
 class nfs::client::rhel (
+  $nfs_v2_enable = false,
   $nfs_v4 = false,
   $nfs_v4_idmap_domain = undef,
   $nfs_v4_kerberized = false,
@@ -12,7 +13,7 @@ class nfs::client::rhel (
   $rpcmountd_opts = undef
 ) inherits nfs::client::rhel::params {
 
-  include nfs::client::rhel::install, 
-    nfs::client::rhel::configure, 
+  include nfs::client::rhel::install,
+    nfs::client::rhel::configure,
     nfs::client::rhel::service
 }

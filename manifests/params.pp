@@ -1,5 +1,5 @@
 class nfs::params (
-  $nfs_v2_enable              = 'no',      # v2: not a typo
+  $nfs_v2_enable              = false,      # v2: not a typo
   $nfs_v4_export_root         = '/export',
   $nfs_v4_export_root_clients = "*.${::domain}(ro,fsid=root,insecure,no_subtree_check,async,root_squash)",
   $nfs_v4_mount_root          = '/srv',

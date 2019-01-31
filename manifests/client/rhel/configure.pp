@@ -14,7 +14,7 @@ class nfs::client::rhel::configure {
   # I know it's 2019 and this is insane, but we have some $$$$$ Agilent
   # equipment that will not be replaced anytime soon... never mind that
   # it was produced well after NFSv3 was ratified
-  if $nfs::client::rhel::nfs_v2_enable == true {
+  if $nfs::client::nfs_v2_enable == true {
      $nfs_v2_enable = 'yes'
   } else {
      $nfs_v2_enable = 'no'
