@@ -1,8 +1,8 @@
 #
-# Define which protocol versions mountd 
+# Define which protocol versions mountd
 # will advertise. The values are "no" or "yes"
 # with yes being the default
-#MOUNTD_NFS_V2="no"
+#MOUNTD_NFS_V2="<%= nfs_v2_enable %>"
 #MOUNTD_NFS_V3="no"
 #
 #
@@ -28,7 +28,7 @@
 # Turn off v4 protocol support
 #RPCNFSDARGS="-N 4"
 # Number of nfs server processes to be started.
-# The default is 8. 
+# The default is 8.
 #RPCNFSDCOUNT=8
 # Stop the nfsd module from being pre-loaded
 #NFSD_MODULE="noload"
@@ -52,7 +52,7 @@ RPCMOUNTDOPTS="<%= rpcmountd_opts %>"
 # Outgoing port statd should used. The default is port
 # is random
 #STATD_OUTGOING_PORT=2020
-# Specify callout program 
+# Specify callout program
 #STATD_HA_CALLOUT="/usr/local/bin/foo"
 #
 #
@@ -61,7 +61,7 @@ RPCMOUNTDOPTS="<%= rpcmountd_opts %>"
 <% rpcidmapd_opts = '' if rpcidmapd_opts.nil? || rpcidmapd_opts == :undef || rpcidmapd_opts.to_s.empty? -%>
 RPCIDMAPDARGS="<%= rpcidmapd_opts %>"
 #
-# Set to turn on Secure NFS mounts. 
+# Set to turn on Secure NFS mounts.
 <% nfs_v4_secure = scope['nfs_v4_secure'] -%>
 <% nfs_v4_secure = '' if nfs_v4_secure.nil? || nfs_v4_secure == :undef || nfs_v4_secure.to_s.empty? -%>
 SECURE_NFS="<%= nfs_v4_secure %>"
@@ -76,4 +76,4 @@ RPCSVCGSSDARGS="<%= rpcsvcgssd_opts %>"
 #
 # To enable RDMA support on the server by setting this to
 # the port the server should listen on
-#RDMA_PORT=20049 
+#RDMA_PORT=20049

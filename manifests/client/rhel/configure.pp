@@ -11,6 +11,16 @@ class nfs::client::rhel::configure {
      $nfs_v4_secure = 'no'
   }
 
+  # I know it's 2019 and this is insane, but we have some $$$$$ Agilent
+  # equipment that will not be replaced anytime soon... never mind that
+  # it was produced well after NFSv3 was ratified
+  if $nfs::client::rhel::nfs_v2_enable == true {
+     $nfs_v2_enable = 'yes'
+  } else {
+     $nfs_v2_enable = 'no'
+  }
+
+
   concat { '/etc/idmapd.conf':
     warn    => true,
     mode    => '0644',
@@ -34,5 +44,5 @@ class nfs::client::rhel::configure {
     order   => '02',
     content => template('nfs/rhel-sysconfig-nfs.erb'),
     notify  => [ Service[$nfs::client::rhel::rpcgssd[name]], Service[$nfs::client::rhel::rpcidmapd[name]] ],
-  }  
+  }
 }
